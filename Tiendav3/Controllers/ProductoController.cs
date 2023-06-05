@@ -19,12 +19,23 @@ namespace Tiendav3.Controllers
         }
 
         // GET: Producto
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchProducto)
         {
-              return _context.Productos != null ? 
-                          View(await _context.Productos.ToListAsync()) :
-                          Problem("Entity set 'crud_meloContext.Productos'  is null.");
-        }
+				var productos = from c in _context.Productos
+							   select c;
+
+				if (!string.IsNullOrEmpty(searchProducto))
+				{
+				productos = productos.Where(c => c.Codigo.ToString().Contains(searchProducto));
+				}
+
+				return View(await productos.ToListAsync());
+				//return _context.Clientes != null ? 
+				//                       View(await _context.Clientes.ToListAsync()) :
+				//                       Problem("Entity set 'crud_meloContext.Clientes'  is null.");
+
+			
+		}
         // GET: Producto/Create
         public IActionResult Create()
         {
@@ -128,6 +139,8 @@ namespace Tiendav3.Controllers
             var producto = await _context.Productos.FindAsync(id);
             if (producto != null)
             {
+                var facturas = await _context.Facturas.Where(f => f.ProductoCodigo == id).ToListAsync();
+                _context.Facturas.RemoveRange(facturas);
                 _context.Productos.Remove(producto);
             }
             

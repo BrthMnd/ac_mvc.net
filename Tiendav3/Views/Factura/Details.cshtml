@@ -35,20 +35,20 @@
             @Html.DisplayFor(model => model.Valor)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClienteCedulaNavigation)
+            Cliente
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClienteCedulaNavigation.Cedula)
+            @Html.DisplayFor(model => model.ClienteCedulaNavigation.Nombre) - @Html.DisplayFor(model => model.ClienteCedulaNavigation.Cedula)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductoCodigoNavigation)
+            Producto
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductoCodigoNavigation.Codigo)
+            @Html.DisplayFor(model => model.ProductoCodigoNavigation.Nombre) - @Html.DisplayFor(model => model.ProductoCodigoNavigation.Codigo)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.NumeroFactura">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.NumeroFactura">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
 </div>

@@ -5,30 +5,33 @@
 }
 
 <h1>Factura</h1>
-
+<div class="search-container">
+    <form method="get" asp-action="Index">
+        <input type="text" name="searchFactura" placeholder="Buscar por Numero de factura" />
+        <input type="submit" value="Buscar" />
+    </form>
+</div>
 <p>
-    <a asp-action="Create">Crear Factura</a>
+    <a asp-action="Create" class="btn btn-success">Crear Factura</a>
+
+</p>
+<p>
+    <a asp-action="Reporte" class="btn btn-primary">Ver Reporte</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ValorTotal)
+                @Html.DisplayNameFor(model => model.NumeroFactura)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
+                Cliente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClienteCedulaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductoCodigoNavigation)
+                Producto
             </th>
             <th></th>
         </tr>
@@ -36,22 +39,17 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorTotal)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroFactura)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fecha)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClienteCedulaNavigation.Nombre) - @Html.DisplayFor(modelItem => item.ClienteCedulaNavigation.Cedula)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-                @Html.DisplayFor(modelItem => item.ClienteCedulaNavigation.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductoCodigoNavigation.Codigo)
+                    @Html.DisplayFor(modelItem => item.ProductoCodigoNavigation.Nombre) - @Html.DisplayFor(modelItem => item.ProductoCodigoNavigation.Codigo)
             </td>
             <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.NumeroFactura">Edit</a> |

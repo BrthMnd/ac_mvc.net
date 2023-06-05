@@ -5,13 +5,21 @@
 }
 
 <h1>Producto</h1>
-
+<div class="search-container">
+    <form method="get" asp-action="Index">
+        <input type="text" name="searchProducto" placeholder="Buscar por Codigo" />
+        <input type="submit" value="Buscar" />
+    </form>
+</div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -27,6 +35,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>

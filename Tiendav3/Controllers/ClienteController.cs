@@ -19,12 +19,24 @@ namespace Tiendav3.Controllers
         }
 
         // GET: Cliente
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchCedula)
+
         {
-              return _context.Clientes != null ? 
-                          View(await _context.Clientes.ToListAsync()) :
-                          Problem("Entity set 'crud_meloContext.Clientes'  is null.");
+			var clientes = from c in _context.Clientes
+						   select c;
+
+			if (!string.IsNullOrEmpty(searchCedula))
+			{
+				clientes = clientes.Where(c => c.Cedula.ToString().Contains(searchCedula));
+			}
+
+			return View(await clientes.ToListAsync());
+			//return _context.Clientes != null ? 
+   //                       View(await _context.Clientes.ToListAsync()) :
+   //                       Problem("Entity set 'crud_meloContext.Clientes'  is null.");
+
         }
+        // GET: Clientes
 
         // GET: Cliente/Create
         public IActionResult Create()
@@ -124,14 +136,22 @@ namespace Tiendav3.Controllers
         {
             if (_context.Clientes == null)
             {
-                return Problem("Entity set 'crud_meloContext.Clientes'  is null.");
+                return Problem("Entity set 'crud_meloContext.Clientes' is null.");
             }
+
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente != null)
             {
+                var facturas = await _context.Facturas.Where(f => f.ClienteCedula == id).ToListAsync();
+                _context.Facturas.RemoveRange(facturas);
+
                 _context.Clientes.Remove(cliente);
             }
-            
+            else
+            {
+                return NotFound();
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

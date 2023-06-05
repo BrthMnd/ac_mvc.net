@@ -5,13 +5,21 @@
 }
 
 <h1>Cliente</h1>
-
+<div class="search-container">
+    <form method="get" asp-action="Index">
+        <input type="text" name="searchCedula" placeholder="Buscar por cédula" />
+        <input type="submit" value="Buscar" />
+    </form>
+</div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cedula)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -27,6 +35,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>

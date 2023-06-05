@@ -19,10 +19,20 @@ namespace Tiendav3.Controllers
         }
 
         // GET: Factura
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchFactura)
         {
+            var facturas = from c in _context.Facturas
+                            select c;
             var crud_meloContext = _context.Facturas.Include(f => f.ClienteCedulaNavigation).Include(f => f.ProductoCodigoNavigation);
-            return View(await crud_meloContext.ToListAsync());
+            if (!string.IsNullOrEmpty(searchFactura))
+            {
+                facturas = facturas.Where(c => c.NumeroFactura.ToString().Contains(searchFactura));
+            }
+            View(await crud_meloContext.ToListAsync());
+            return View(await facturas.ToListAsync()); 
+
+            
+            //return View(await crud_meloContext.ToListAsync());
         }
 
         // GET: Factura/Details/5
@@ -67,7 +77,14 @@ namespace Tiendav3.Controllers
                 {
                     return NotFound();
                 }
-
+                bool numeroFacturaRepetido = await _context.Facturas.AnyAsync(f => f.NumeroFactura == factura.NumeroFactura);
+                if (numeroFacturaRepetido)
+                {
+                    ModelState.AddModelError("NumeroFactura", "Ya se encuentra registrado");
+                    ViewData["ClienteCedula"] = new SelectList(_context.Clientes, "Cedula", "Cedula", factura.ClienteCedula);
+                    ViewData["ProductoCodigo"] = new SelectList(_context.Productos, "Codigo", "Codigo", factura.ProductoCodigo);
+                    return View(factura);
+                }
                 if (factura.Cantidad > producto.Cantidad)
                 {
                     ModelState.AddModelError("Cantidad", "La cantidad de productos no es válida.");
@@ -81,7 +98,7 @@ namespace Tiendav3.Controllers
                 factura.Valor = producto.Precio;
 
                 factura.ValorTotal = factura.Cantidad * factura.Valor;
-
+                factura.Cantidad-=producto.Cantidad;
 
                 _context.Add(factura);
                 await _context.SaveChangesAsync();
@@ -144,6 +161,7 @@ namespace Tiendav3.Controllers
                 factura.Valor = producto.Precio;
 
                 factura.ValorTotal = factura.Cantidad * factura.Valor;
+                factura.Cantidad -= producto.Cantidad;
                 try
                 {
                     _context.Update(factura);
@@ -204,6 +222,21 @@ namespace Tiendav3.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Reporte()
+        {
+            var facturas = await _context.Facturas
+                .Include(f => f.ClienteCedulaNavigation)
+                .Include(f => f.ProductoCodigoNavigation)
+                .ToListAsync();
+
+            var clientes = await _context.Clientes.ToListAsync();
+            var productos = await _context.Productos.ToListAsync();
+
+            ViewBag.Clientes = clientes;
+            ViewBag.Productos = productos;
+
+            return View(facturas);
         }
 
         private bool FacturaExists(int id)

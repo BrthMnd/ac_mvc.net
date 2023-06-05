@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Tiendav3.Models.Factura>
+
+@{
+    ViewData["Title"] = "Reporte";
+}
+
+<h1>Reporte</h1>
+
+<h2>Facturas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var factura in Model)
+        {
+            <tr>
+                <td>@factura.ClienteCedulaNavigation.Nombre</td>
+                <td>@factura.ProductoCodigoNavigation.Nombre</td>
+                <td>@factura.Cantidad</td>
+                <td>@factura.ProductoCodigoNavigation.Precio</td>
+                <td>@(factura.ValorTotal)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Clientes</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in ViewBag.Clientes)
+        {
+            <tr>
+                <td>@cliente.Cedula</td>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.Telefono</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Productos</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in ViewBag.Productos)
+        {
+            <tr>
+                <td>@producto.Codigo</td>
+                <td>@producto.Nombre</td>
+                <td>@producto.Precio</td>
+                <td>@producto.Cantidad</td>
+            </tr>
+        }
+    </tbody>
+</table>
