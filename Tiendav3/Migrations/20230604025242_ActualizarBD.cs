@@ -48,33 +48,33 @@ namespace Tiendav3.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
-            //migrationBuilder.CreateTable(
-            //    name: "Clientes",
-            //    columns: table => new
-            //    {
-            //        Cedula = table.Column<int>(type: "int", nullable: false),
-            //        Nombre = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-            //        Direccion = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-            //        Telefono = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK__Clientes__B4ADFE3973FC4286", x => x.Cedula);
-            //    });
+            migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    Cedula = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Direccion = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Telefono = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Clientes__B4ADFE3973FC4286", x => x.Cedula);
+                });
 
-            //migrationBuilder.CreateTable(
-            //    name: "Productos",
-            //    columns: table => new
-            //    {
-            //        Codigo = table.Column<int>(type: "int", nullable: false),
-            //        Nombre = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-            //        Precio = table.Column<double>(type: "float", nullable: false),
-            //        Cantidad = table.Column<int>(type: "int", nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK__Producto__06370DADC44F1744", x => x.Codigo);
-            //    });
+            migrationBuilder.CreateTable(
+                name: "Productos",
+                columns: table => new
+                {
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    Precio = table.Column<double>(type: "float", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Producto__06370DADC44F1744", x => x.Codigo);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -182,32 +182,32 @@ namespace Tiendav3.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            //migrationBuilder.CreateTable(
-            //    name: "Facturas",
-            //    columns: table => new
-            //    {
-            //        NumeroFactura = table.Column<int>(type: "int", nullable: false),
-            //        ClienteCedula = table.Column<int>(type: "int", nullable: true),
-            //        ValorTotal = table.Column<double>(type: "float", nullable: false),
-            //        Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
-            //        ProductoCodigo = table.Column<int>(type: "int", nullable: true),
-            //        Cantidad = table.Column<int>(type: "int", nullable: false),
-            //        Valor = table.Column<double>(type: "float", nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK__Facturas__CF12F9A7196169CC", x => x.NumeroFactura);
-            //        table.ForeignKey(
-            //            name: "FK__Facturas__Client__3B75D760",
-            //            column: x => x.ClienteCedula,
-            //            principalTable: "Clientes",
-            //            principalColumn: "Cedula");
-            //        table.ForeignKey(
-            //            name: "FK__Facturas__Produc__3C69FB99",
-            //            column: x => x.ProductoCodigo,
-            //            principalTable: "Productos",
-            //            principalColumn: "Codigo");
-            //    });
+            migrationBuilder.CreateTable(
+                name: "Facturas",
+                columns: table => new
+                {
+                    NumeroFactura = table.Column<int>(type: "int", nullable: false),
+                    ClienteCedula = table.Column<int>(type: "int", nullable: true),
+                    ValorTotal = table.Column<double>(type: "float", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ProductoCodigo = table.Column<int>(type: "int", nullable: true),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Facturas__CF12F9A7196169CC", x => x.NumeroFactura);
+                    table.ForeignKey(
+                        name: "FK__Facturas__Client__3B75D760",
+                        column: x => x.ClienteCedula,
+                        principalTable: "Clientes",
+                        principalColumn: "Cedula");
+                    table.ForeignKey(
+                        name: "FK__Facturas__Produc__3C69FB99",
+                        column: x => x.ProductoCodigo,
+                        principalTable: "Productos",
+                        principalColumn: "Codigo");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -248,15 +248,15 @@ namespace Tiendav3.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_Facturas_ClienteCedula",
-            //    table: "Facturas",
-            //    column: "ClienteCedula");
+            migrationBuilder.CreateIndex(
+                name: "IX_Facturas_ClienteCedula",
+                table: "Facturas",
+                column: "ClienteCedula");
 
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_Facturas_ProductoCodigo",
-            //    table: "Facturas",
-            //    column: "ProductoCodigo");
+            migrationBuilder.CreateIndex(
+                name: "IX_Facturas_ProductoCodigo",
+                table: "Facturas",
+                column: "ProductoCodigo");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -276,8 +276,8 @@ namespace Tiendav3.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
 
-            //migrationBuilder.DropTable(
-            //    name: "Facturas");
+            migrationBuilder.DropTable(
+                name: "Facturas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -285,11 +285,11 @@ namespace Tiendav3.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            //migrationBuilder.DropTable(
-            //    name: "Clientes");
+            migrationBuilder.DropTable(
+                name: "Clientes");
 
-            //migrationBuilder.DropTable(
-            //    name: "Productos");
+            migrationBuilder.DropTable(
+                name: "Productos");
         }
     }
 }
